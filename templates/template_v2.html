@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Book Results</title>
+</head>
+
+<style>
+    table,
+    tr,
+    td,
+    th {
+        border: 1px solid black;
+        border-collapse: collapse;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    th,
+    td {
+        padding: 5px;
+        text-align: left;
+    }
+
+    thead {
+        background-color: #276cec;
+        color: white;
+        font-variant: small-caps;
+    }
+
+    td:nth-last-child(-n+2) {
+        font-family: "Consolas";
+        text-align: right;
+        min-width: 5em;
+    }
+</style>
+
+<body>
+{% for table in tables %}
+    {{titles[loop.index]}}
+    {{ table|safe }}
+{% endfor %}
+</body>
+
+</html>

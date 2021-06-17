@@ -1,7 +1,7 @@
 # web_data_app.py
 # Garth Johnson, Emily Marasco
 # June 15, 2021
-# Modified by: STUDENT NAME
+# Modified by: BHAVYAI GUPTA
 #
 # An simple program for demonstrating web applications using Flask and web scraping of data using Beautiful Soup.
 # Detailed specifications are provided via the Assignment 6 git repository.
@@ -25,9 +25,9 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     """
-    Our first (topmost) route (aka 'view').  Routes are like URLs, 
-    which we can access from a browser. The line immediately below is known as a 
-    'decorator' and implements some boilerplate code for us without much work on 
+    Our first (topmost) route (aka 'view').  Routes are like URLs,
+    which we can access from a browser. The line immediately below is known as a
+    'decorator' and implements some boilerplate code for us without much work on
     our end.  Basically it creates a 'view' to our app and data to show the user.
     This one merely shows a static message.  Easy-peasy.
     """
@@ -37,9 +37,9 @@ def index():
 @app.route("/hello/<name>")
 def hello_there(name):
     """
-    This route shows a bit more of what we can do, including some 'REST'full user 
+    This route shows a bit more of what we can do, including some 'REST'full user
     interaction.  If a user specifies a name in the url like so: http://localhost:5000/hello/supercoder
-    the response will include the value 'supercoder' in the `name` variable, and 
+    the response will include the value 'supercoder' in the `name` variable, and
     can then be validated with the RE `match_object` output.  If an invalid value is specified
     for `name` the validator code will simply assign 'friend' value to the `clean_name`
     instead.  If no value is specified, it will error out and present a 404 error to the browser.
@@ -66,7 +66,7 @@ def book_data():
     Now let's take what we learned about Pandas and scrap some data from the internet!
     """
 
-    # Web scraping can be against the Terms of Use. 
+    # Web scraping can be against the Terms of Use.
     # Always check to make sure that you are web scraping legally and ethically.
     # The following site was specifically created to practice web scraping.
     source = requests.get("http://books.toscrape.com/")
@@ -82,14 +82,16 @@ def book_data():
         prices.append(float(book.find('p', class_="price_color").text[1:]))
 
     # Create a DataFrame using the two lists
-    book_data = pd.DataFrame(list(zip(titles, prices)), columns=['Titles','Prices'])    
+    book_data = pd.DataFrame(list(zip(titles, prices)), columns=['Titles','Prices'])
+    book_data['Sale Price'] = round(book_data['Prices'] * 0.75, 2)
     print(book_data)        # Print to the terminal as confirmation - only we can see this
 
     # Format and print the DataFrame using the html template provided in the templates subdirectory
-    return render_template('template.html',  tables=[book_data.to_html(classes='data')], titles=book_data.columns.values)
+    return render_template('template_v2.html',  tables=[book_data.to_html(classes='data')], titles=book_data.columns.values)
 
 @app.route("/learn")
 def learn():
     # Return a string the describes one thing you learned in ENSF 592.
-    pass
+    learning = "I learned amazing things that can be done with Pandas, and learned to draw beautiful graphs using Matplotlib"
+    return learning
 
